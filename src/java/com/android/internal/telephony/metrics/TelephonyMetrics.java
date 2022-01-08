@@ -2297,13 +2297,15 @@ public class TelephonyMetrics {
      *         {@link SmsMessage#FORMAT_3GPP2}.
      * @param messageId Unique id for this message.
      */
-    public synchronized void writeRilSendSms(int phoneId, int rilSerial, int tech, int format) {
+    public synchronized void writeRilSendSms(int phoneId, int rilSerial, int tech, int format,
+            long messageId) {
         InProgressSmsSession smsSession = startNewSmsSessionIfNeeded(phoneId);
 
         smsSession.addEvent(new SmsSessionEventBuilder(SmsSession.Event.Type.SMS_SEND)
                 .setTech(tech)
                 .setRilRequestId(rilSerial)
                 .setFormat(format)
+                .setMessageId(messageId)
         );
 
         smsSession.increaseExpectedResponse();
