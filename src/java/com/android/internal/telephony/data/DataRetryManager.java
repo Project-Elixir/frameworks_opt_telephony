@@ -128,7 +128,7 @@ public class DataRetryManager extends Handler {
     public @interface RetryResetReason {}
 
     /** Reset due to data profiles changed. */
-    private static final int RESET_REASON_DATA_PROFILES_CHANGED = 1;
+    protected static final int RESET_REASON_DATA_PROFILES_CHANGED = 1;
 
     /** Reset due to radio on. This could happen after airplane mode off or RIL restarted. */
     private static final int RESET_REASON_RADIO_ON = 2;
@@ -143,13 +143,13 @@ public class DataRetryManager extends Handler {
     private static final int RESET_REASON_DATA_SERVICE_BOUND = 4;
 
     /** Reset due to data config changed. */
-    private static final int RESET_REASON_DATA_CONFIG_CHANGED = 5;
+    protected static final int RESET_REASON_DATA_CONFIG_CHANGED = 5;
 
     /** Reset due to tracking area code changed. */
     private static final int RESET_REASON_TAC_CHANGED = 6;
 
     /** The phone instance. */
-    private final @NonNull Phone mPhone;
+    protected final @NonNull Phone mPhone;
 
     /** The RIL instance. */
     private final @NonNull CommandsInterface mRil;
@@ -173,7 +173,7 @@ public class DataRetryManager extends Handler {
     private @NonNull SparseArray<DataServiceManager> mDataServiceManagers;
 
     /** Data config manager instance. */
-    private final @NonNull DataConfigManager mDataConfigManager;
+    protected final @NonNull DataConfigManager mDataConfigManager;
 
     /** Data profile manager. */
     private final @NonNull DataProfileManager mDataProfileManager;
@@ -1143,7 +1143,7 @@ public class DataRetryManager extends Handler {
                 retryDelayMillis));
     }
 
-    private void onEvaluateDataSetupRetry(@NonNull DataProfile dataProfile,
+    protected void onEvaluateDataSetupRetry(@NonNull DataProfile dataProfile,
             @TransportType int transport, @NonNull NetworkRequestList requestList,
             @DataFailureCause int cause, long retryDelayMillis) {
         logl("onEvaluateDataSetupRetry: " + dataProfile + ", transport="
@@ -1353,7 +1353,7 @@ public class DataRetryManager extends Handler {
     }
 
     /** Cancel all retries and throttling entries. */
-    private void onReset(@RetryResetReason int reason) {
+    protected void onReset(@RetryResetReason int reason) {
         logl("Remove all retry and throttling entries, reason=" + resetReasonToString(reason));
         removeMessages(EVENT_DATA_SETUP_RETRY);
         removeMessages(EVENT_DATA_HANDOVER_RETRY);
@@ -1808,7 +1808,7 @@ public class DataRetryManager extends Handler {
      * @param reason The reason
      * @return The reason in string format.
      */
-    private static @NonNull String resetReasonToString(int reason) {
+    protected static @NonNull String resetReasonToString(int reason) {
         switch (reason) {
             case RESET_REASON_DATA_PROFILES_CHANGED:
                 return "DATA_PROFILES_CHANGED";
@@ -1831,7 +1831,7 @@ public class DataRetryManager extends Handler {
      * Log debug messages.
      * @param s debug messages
      */
-    private void log(@NonNull String s) {
+    protected void log(@NonNull String s) {
         Rlog.d(mLogTag, s);
     }
 
@@ -1839,7 +1839,7 @@ public class DataRetryManager extends Handler {
      * Log error messages.
      * @param s error messages
      */
-    private void loge(@NonNull String s) {
+    protected void loge(@NonNull String s) {
         Rlog.e(mLogTag, s);
     }
 
@@ -1847,7 +1847,7 @@ public class DataRetryManager extends Handler {
      * Log verbose messages.
      * @param s debug messages.
      */
-    private void logv(@NonNull String s) {
+    protected void logv(@NonNull String s) {
         if (VDBG) Rlog.v(mLogTag, s);
     }
 
